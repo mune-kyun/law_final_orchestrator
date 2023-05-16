@@ -6,16 +6,18 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: law-final-orchestrator
+    expose:
+      - 5672
     ports:
       - '${D_PORT}:3000'
     restart: always
 
-  mirror-server-1:
-    stdin_open: true
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: law-final-orchestrator-mirror-1
-    ports:
-      - '${D_PORT_MIRROR_1}:3000'
-    restart: always
+  # mirror-server-1:
+  #   stdin_open: true
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: law-final-orchestrator-mirror-1
+  #   ports:
+  #     - '${D_PORT_MIRROR_1}:3000'
+  #   restart: always

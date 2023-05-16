@@ -1,15 +1,26 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Inject } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateReqDto } from './dto';
-import { EventPattern } from '@nestjs/microservices';
+import { ClientProxy, EventPattern } from '@nestjs/microservices';
 
 @Controller('/order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    @Inject('SEND_QUEUE') private readonly client: ClientProxy,
+  ) {}
 
-  @Post('')
+  @Post()
   login(@Body() dto: CreateReqDto) {
     return this.orderService.create(dto);
+  }
+
+  @Get('/test')
+  patty(): any {
+    try {
+      this.client.emit('hello2', 'Hello from orchestrator law');
+      return { msg: 'tingtun' };
+    } catch (error) {}
   }
 
   @EventPattern('hello')

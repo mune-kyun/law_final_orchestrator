@@ -1,7 +1,9 @@
-POST http://localhost:8000/order
+POST http://localhost:3000/order
 Content-Type: application/json
 
 {
     "name": "test",
     "description": "testos test"
 }
+###
+GET http://localhost:3000/order/test
