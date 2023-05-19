@@ -3,7 +3,7 @@ import { OrderService } from './order.service';
 import { CreateReqDto } from './dto';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 
-@Controller('/order')
+@Controller('/orchestrator/order')
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
@@ -21,6 +21,11 @@ export class OrderController {
       this.client.emit('hello2', 'Hello from orchestrator law');
       return { msg: 'tingtun' };
     } catch (error) {}
+  }
+
+  @Post('/post-rabbitmq')
+  postRabbitMQ(@Body() dto: CreateReqDto) {
+    this.client.emit('hello2post', dto);
   }
 
   @EventPattern('hello')

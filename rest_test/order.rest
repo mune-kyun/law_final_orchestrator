@@ -5,5 +5,17 @@ Content-Type: application/json
     "name": "test",
     "description": "testos test"
 }
+
 ###
+
+POST http://localhost:3000/order/post-rabbitmq
+Content-Type: application/json
+
+{
+    "name": "test",
+    "description": "testos test"
+}
+
+###
+
 GET http://localhost:3000/order/test
