@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('/test')
+@Controller('/orchestrator/test')
 export class AppController {
   @Get('')
   test(): object {
