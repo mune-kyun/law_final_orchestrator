@@ -11,7 +11,7 @@ import { rabbitMQHost } from './utils';
       exchanges: [
         {
           name: 'test',
-          type: 'direct',
+          type: 'topic',
         },
       ],
       uri: `amqp://${rabbitMQHost}`,
