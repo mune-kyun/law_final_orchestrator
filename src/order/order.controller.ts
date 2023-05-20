@@ -1,35 +1,25 @@
 import { Body, Controller, Get, Post, Inject } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { CreateReqDto } from './dto';
-import { ClientProxy, EventPattern } from '@nestjs/microservices';
+import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 
 @Controller('/orchestrator/order')
 export class OrderController {
-  constructor(
-    private readonly orderService: OrderService,
-    @Inject('SEND_QUEUE') private readonly client: ClientProxy,
-  ) {}
+  constructor(private readonly amqpConnection: AmqpConnection) {}
 
-  @Post()
-  login(@Body() dto: CreateReqDto) {
-    return this.orderService.create(dto);
+  @Get('/publish-rabbit')
+  async publishRabbit() {
+    const data = { username: 'order' };
+    await this.amqpConnection.publish('orchestrator.order', 'test.order', {
+      data: data,
+    });
+    console.log('msg published');
   }
 
-  @Get('/test')
-  patty(): any {
-    try {
-      this.client.emit('hello2', 'Hello from orchestrator law');
-      return { msg: 'tingtun' };
-    } catch (error) {}
-  }
-
-  @Post('/post-rabbitmq')
-  postRabbitMQ(@Body() dto: CreateReqDto) {
-    this.client.emit('hello2post', dto);
-  }
-
-  @EventPattern('hello')
-  hello(data: string) {
-    console.log(data);
+  @RabbitSubscribe({
+    exchange: 'orchestrator.order',
+    routingKey: 'test.order',
+    queue: 'orchestrator',
+  })
+  async handleTestRabbitMQ(msg: any) {
+    console.log(`Received message: ${JSON.stringify(msg)}`);
   }
 }

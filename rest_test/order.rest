@@ -19,3 +19,6 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/order/test
+
+###
+GET http://localhost:3000/orchestrator/order/publish-rabbit
