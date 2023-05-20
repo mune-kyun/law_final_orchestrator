@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  orchestrator:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orchestrator
+    expose:
+      - 5672
+    ports:
+      - '3000:3000'
+    restart: always
+
+  orchestrator2:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orchestrator2
+    expose:
+      - 5672
+    ports:
+      - '3100:3000'
+    restart: always

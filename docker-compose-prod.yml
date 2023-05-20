@@ -6,4 +6,4 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./nginx/nginx-prod.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/prod/nginx.conf:/etc/nginx/nginx.conf:ro
