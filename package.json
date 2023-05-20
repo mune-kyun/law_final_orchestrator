@@ -23,6 +23,7 @@
     "docker:up": "docker-compose up --build -d"
   },
   "dependencies": {
+    "@golevelup/nestjs-rabbitmq": "^3.6.0",
     "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^9.4.0",
     "@nestjs/microservices": "^9.4.0",

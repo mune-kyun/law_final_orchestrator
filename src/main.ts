@@ -13,18 +13,18 @@ async function bootstrap() {
   // await app.listen(8000);
 
   const app = await NestFactory.create(AppModule);
-  const microservice = app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://34.30.172.108:5672'],
-      queue: 'test_queue',
-      queueOptions: {
-        durable: true,
-      },
-    },
-  });
+  // const microservice = app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.RMQ,
+  //   options: {
+  //     urls: ['amqp://34.30.172.108:5672'],
+  //     queue: 'test_queue',
+  //     queueOptions: {
+  //       durable: true,
+  //     },
+  //   },
+  // });
 
-  await app.startAllMicroservices();
+  // await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();
