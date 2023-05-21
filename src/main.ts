@@ -9,10 +9,10 @@ async function bootstrap() {
   //   origin: ['http://localhost:3000', 'http://34.172.160.15'],
   //   methods: ['POST', 'PUT', 'DELETE', 'GET'],
   // });
-  // app.useGlobalPipes(new ValidationPipe());
   // await app.listen(8000);
 
   const app = await NestFactory.create(AppModule);
+  // app.useGlobalPipes(new ValidationPipe());
   // const microservice = app.connectMicroservice<MicroserviceOptions>({
   //   transport: Transport.RMQ,
   //   options: {

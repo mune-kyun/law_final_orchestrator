@@ -17,7 +17,7 @@ export class OrderService {
     private readonly httpService: HttpService,
   ) {}
 
-  async createOrder(jwt: JwtDTO, dto: CreateOrderDto) {
+  async createOrder(jwt: string, dto: CreateOrderDto) {
     const user = await this.verify(jwt);
     // console.log(user);
     if (!user) return null;
@@ -32,11 +32,17 @@ export class OrderService {
     // TODO: publish to product
 
     // TODO: publish to transaction
+    await this.amqpConnection.publish('transaction', 'create.transaction', {
+      token: jwt,
+      receiver: dto.receiver,
+      amount: dto.amount,
+      productId: dto.product_id,
+    });
 
     return { jwt, id: dto.product_id };
   }
 
-  async verify(jwt: JwtDTO): Promise<any> {
+  async verify(jwt: string): Promise<any> {
     const { data }: any = await firstValueFrom(
       this.httpService
         .post<any>(`${authHost}token/verify/`, { token: jwt })

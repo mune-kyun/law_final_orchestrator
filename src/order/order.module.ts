@@ -13,6 +13,10 @@ import { HttpModule } from '@nestjs/axios';
           name: 'orchestrator.order',
           type: 'topic',
         },
+        {
+          name: 'transaction',
+          type: 'topic',
+        },
       ],
       uri: `amqp://${rabbitMQHost}`,
       connectionInitOptions: { wait: false },

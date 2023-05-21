@@ -1,0 +1,14 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3MjUzMDc3LCJpYXQiOjE2ODQ2NjEwNzcsImp0aSI6IjJjM2JlOGNjMzdhODRiODVhZDFhZTU2MGFmZWU2NmYwIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJ0ZXN0In0._k4enwLSvnR05X5BFZkmHktpSAiU43Mx_yRT4R0Sv-g
+###
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3Mjg0NTY0LCJpYXQiOjE2ODQ2OTI1NjQsImp0aSI6ImYxYWQwMzUyMmVhZDRhZDliOWQ5MTI4YWVkNjExYzc2IiwidXNlcl9pZCI6MTMsInVzZXJuYW1lIjoiYWRtaW4ifQ.7aSmkkkihQjIXm2T_zp-lTIvLMZ4U-GKY69kCBrVwSc
+###
+
+POST http://localhost:3000/orchestrator/transaction/update-status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    
+    "id": 406,
+    "status": "CONFIRMED"
+}
