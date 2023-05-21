@@ -3,6 +3,7 @@ import { OrderController } from './order.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { rabbitMQHost } from 'src/utils';
+import { OrderService } from './order.service';
 
 @Module({
   imports: [
@@ -14,10 +15,11 @@ import { rabbitMQHost } from 'src/utils';
         },
       ],
       uri: `amqp://${rabbitMQHost}`,
-      enableControllerDiscovery: true,
       connectionInitOptions: { wait: false },
     }),
+    OrderModule,
   ],
   controllers: [OrderController],
+  providers: [OrderService],
 })
 export class OrderModule {}

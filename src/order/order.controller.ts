@@ -1,25 +1,22 @@
 import { Body, Controller, Get, Post, Inject } from '@nestjs/common';
-import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { CustomJwt } from 'src/auth/decorator';
+import { JwtDTO } from 'src/auth/dto';
+import { CreateReqDto } from './dto';
+import { OrderService } from './order.service';
 
 @Controller('/orchestrator/order')
 export class OrderController {
-  constructor(private readonly amqpConnection: AmqpConnection) {}
+  constructor(private readonly orderService: OrderService) {}
 
   @Get('/publish-rabbit')
   async publishRabbit() {
-    const data = { username: 'order' };
-    await this.amqpConnection.publish('orchestrator.order', 'test.order', {
-      data: data,
-    });
+    this.orderService.publishRabbit();
     console.log('msg published');
   }
 
-  @RabbitSubscribe({
-    exchange: 'orchestrator.order',
-    routingKey: 'test.order',
-    queue: 'orchestrator',
-  })
-  async handleTestRabbitMQ(msg: any) {
-    console.log(`Received message: ${JSON.stringify(msg)}`);
+  @Post('/post-rabbit')
+  async postRabbit(@CustomJwt(JwtDTO) jwt: any, @Body() body: CreateReqDto) {
+    this.orderService.postRabbit(jwt, body);
+    console.log('msg published');
   }
 }
