@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { OrderModule } from './order/order.module';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { rabbitMQHost } from './utils';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { rabbitMQHost } from './utils';
     }),
     AuthModule,
     OrderModule,
+    TransactionModule,
   ],
   controllers: [AppController],
 })

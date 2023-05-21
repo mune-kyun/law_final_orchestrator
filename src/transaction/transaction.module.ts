@@ -1,26 +1,24 @@
 import { Module } from '@nestjs/common';
-import { OrderController } from './order.controller';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { TransactionController } from './transaction.controller';
+import { TransactionService } from './transaction.service';
 import { rabbitMQHost } from 'src/utils';
-import { OrderService } from './order.service';
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'orchestrator.order',
+          name: 'orchestrator.transaction',
           type: 'topic',
         },
       ],
       uri: `amqp://${rabbitMQHost}`,
       connectionInitOptions: { wait: false },
     }),
-    HttpModule,
-    OrderModule,
+    TransactionModule,
   ],
-  controllers: [OrderController],
-  providers: [OrderService],
+  controllers: [TransactionController],
+  providers: [TransactionService],
 })
-export class OrderModule {}
+export class TransactionModule {}

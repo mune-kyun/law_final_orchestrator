@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { JwtDTO, LoginDto } from './dto';
-import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { Injectable, HttpException } from '@nestjs/common';
+import { JwtDTO, LoginDto, VerifiedJwtDto } from './dto';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AuthService {
