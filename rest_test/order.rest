@@ -57,7 +57,10 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
+    "start_date": "2023-05-22",
+    "finish_date": "2023-05-22",
     "receiver": "test",
+    "orderer": "Winson Bar",
     "amount": 3000,
-    "product_id": 3
+    "product_id": 15
 }

@@ -8,7 +8,7 @@ import { HttpService } from '@nestjs/axios';
 import { CreateReqDto } from './dto';
 import { JwtDTO } from 'src/auth/dto';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { authHost } from 'src/utils';
+import { authHost, orderHost } from 'src/utils';
 
 @Injectable()
 export class OrderService {
@@ -22,16 +22,17 @@ export class OrderService {
     // console.log(user);
     if (!user) return null;
 
-    // TODO: guard product
+    // order
+    try {
+      await this.createOrderHttp(
+        dto.product_id,
+        dto.start_date,
+        dto.finish_date,
+        dto.orderer,
+      );
+    } catch (error) {}
 
-    // TODO: publish to order
-    // await this.amqpConnection.publish('orchestrator.order', 'test.order', {
-    //   jwt,
-    // });
-
-    // TODO: publish to product
-
-    // TODO: publish to transaction
+    // transaction
     await this.amqpConnection.publish('transaction', 'create.transaction', {
       token: jwt,
       receiver: dto.receiver,
@@ -46,6 +47,29 @@ export class OrderService {
     const { data }: any = await firstValueFrom(
       this.httpService
         .post<any>(`${authHost}token/verify/`, { token: jwt })
+        .pipe(
+          catchError((error: AxiosError) => {
+            throw 'An error happened!';
+          }),
+        ),
+    );
+    return data;
+  }
+
+  async createOrderHttp(
+    product_id: any,
+    start_date: any,
+    finish_date: any,
+    orderer: any,
+  ): Promise<any> {
+    const { data }: any = await firstValueFrom(
+      this.httpService
+        .post<any>(`${orderHost}order/`, {
+          product_id,
+          start_date,
+          finish_date,
+          orderer: orderer,
+        })
         .pipe(
           catchError((error: AxiosError) => {
             throw 'An error happened!';
