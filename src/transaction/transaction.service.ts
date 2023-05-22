@@ -9,6 +9,7 @@ import { HttpService } from '@nestjs/axios';
 import { JwtDTO } from 'src/auth/dto';
 import { authHost } from 'src/utils';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { DeleteTransactionDto } from './dto';
 
 @Injectable()
 export class TransactionService {
@@ -26,6 +27,20 @@ export class TransactionService {
       token: jwt,
       id: dto.id,
       status: dto.status,
+    });
+
+    // TODO: if accept change status order, else delete order
+    return null;
+  }
+
+  async deleteTransaction(jwt: JwtDTO, dto: DeleteTransactionDto) {
+    const user = await this.verify(jwt);
+    // console.log(user);
+    if (!user) return null;
+
+    await this.amqpConnection.publish('transaction', 'delete.transaction', {
+      token: jwt,
+      id: dto.id,
     });
 
     // TODO: if accept change status order, else delete order

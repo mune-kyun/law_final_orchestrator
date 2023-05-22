@@ -1,17 +1,25 @@
-import { Body, Controller, Get, Post, Res, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Res,
+  HttpStatus,
+} from '@nestjs/common';
 import { Response } from 'express';
 
 import { CustomJwt } from 'src/auth/decorator';
 import { JwtDTO } from 'src/auth/dto';
 import { TransactionService } from './transaction.service';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { DeleteTransactionDto, UpdateTransactionDto } from './dto';
 
 @Controller('/orchestrator/transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post('/update-status')
-  async createOrder(
+  async updateTransaction(
     @CustomJwt(JwtDTO) jwt: any,
     @Body() body: UpdateTransactionDto,
     @Res() response: Response,
@@ -19,5 +27,16 @@ export class TransactionController {
     await this.transactionService.updateTransaction(jwt, body);
 
     response.status(HttpStatus.OK).send({ msg: 'update being processed' });
+  }
+
+  @Post('/delete')
+  async deleteTransaction(
+    @CustomJwt(JwtDTO) jwt: any,
+    @Body() body: DeleteTransactionDto,
+    @Res() response: Response,
+  ) {
+    await this.transactionService.deleteTransaction(jwt, body);
+
+    response.status(HttpStatus.OK).send({ msg: 'delete being processed' });
   }
 }

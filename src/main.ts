@@ -12,6 +12,7 @@ async function bootstrap() {
   // await app.listen(8000);
 
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   // app.useGlobalPipes(new ValidationPipe());
   // const microservice = app.connectMicroservice<MicroserviceOptions>({
   //   transport: Transport.RMQ,
