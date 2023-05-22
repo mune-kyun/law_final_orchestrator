@@ -59,8 +59,8 @@ Content-Type: application/json
 {
     "start_date": "2023-05-22",
     "finish_date": "2023-05-22",
-    "receiver": "test",
-    "orderer": "Winson Bar",
+    "receiver": "Winson Bar",
+    "orderer": "test",
     "amount": 3000,
     "product_id": 15
 }
