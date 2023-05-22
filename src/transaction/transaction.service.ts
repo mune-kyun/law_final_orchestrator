@@ -31,11 +31,21 @@ export class TransactionService {
     });
 
     // delete order if the status is rejected
-    if (dto.status == 'REJECTED') {
-      try {
-        await this.deleteOrderHttp(dto.order_id);
-      } catch (error) {}
-    }
+    // if (dto.status == 'REJECTED') {
+    //   try {
+    //     console.log('called');
+    //     await this.deleteOrderHttp(dto.order_id);
+    //   } catch (error) {}
+    // }
+
+    // product set to available
+    // if (dto.status == 'REJECTED') {
+    //   try {
+    //     console.log('called');
+    //     const data = await this.getProductDetailHttp(dto.product_id);
+    //     console.log(data);
+    //   } catch (error) {}
+    // }
     return null;
   }
 
@@ -60,6 +70,18 @@ export class TransactionService {
         }),
       ),
     );
+    return data;
+  }
+
+  async getProductDetailHttp(product_id: any): Promise<any> {
+    const { data }: any = await firstValueFrom(
+      this.httpService.get<any>(`${orderHost}product/${product_id}`).pipe(
+        catchError((error: AxiosError) => {
+          throw 'An error happened!';
+        }),
+      ),
+    );
+    console.log(data);
     return data;
   }
 

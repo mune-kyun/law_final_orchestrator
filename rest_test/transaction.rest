@@ -8,7 +8,17 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-    "order_id": 8,
+    "order_id": 0,
     "id": 603,
     "status": "REJECTED"
+}
+###
+# POST http://34.172.19.169/orchestrator/transaction/update-status
+POST http://localhost:3000/orchestrator/transaction/update-status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "id": 605,
+    "status": "CONFIRMED"
 }
